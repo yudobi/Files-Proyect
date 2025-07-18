@@ -1,0 +1,330 @@
+/* Pie de pagina moderno con icono de whatssapp Pie de pagina moderno con icono de whatssapp Pie de pagina moderno con icono de whatssapp  */
+/* Estilos generales */
+/*
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 200vh; 
+}
+
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #25D366;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.whatsapp-float:hover {
+    background-color: #128C7E;
+    transform: scale(1.1);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}
+
+/* Pie de página 
+footer {
+    background: linear-gradient(135deg, #2c3e50, #4a6491);
+    color: white;
+    padding: 3rem 2rem;
+    display: none; /* Inicialmente oculto 
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    transform: translateY(100%);
+    transition: transform 0.5s ease, display 0.5s ease;
+    z-index: 99;
+}
+
+footer.active {
+    display: block;
+    transform: translateY(0);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.footer-section {
+    margin-bottom: 1.5rem;
+}
+
+.footer-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.footer-section h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 2px;
+    background-color: #25D366;
+}
+
+.footer-section p, .footer-section a {
+    color: #ecf0f1;
+    margin-bottom: 0.8rem;
+    display: block;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: #25D366;
+    padding-left: 5px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-icons a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: #25D366;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        font-size: 25px;
+        bottom: 20px;
+        right: 20px;
+    }
+}*/
+/* Estilos para el footer con ID #main-footer */
+#main-footer {
+    background-color: #2c3e50; /* Color de fondo azul oscuro */
+    color: #ecf0f1; /* Color de texto claro */
+    padding: 3rem 0 0; /* Espaciado interno: 3rem arriba, 0 abajo */
+    margin-top: 4rem; /* Separación del contenido superior */
+    width: 100%;
+    position: relative;
+    z-index: 10;
+  }
+  
+  /* Contenedor del contenido principal */
+  #main-footer .footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas responsivas */
+    gap: 2rem; /* Espacio entre columnas */
+    max-width: 1200px; /* Ancho máximo del contenido */
+    margin: 0 auto; /* Centrado horizontal */
+    padding: 0 2rem; /* Espaciado lateral */
+  }
+  
+  /* Estilos para cada sección del footer */
+  #main-footer .footer-section {
+    margin-bottom: 2rem;
+  }
+  
+  /* Títulos de sección */
+  #main-footer .footer-section h3 {
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 10px;
+  }
+  
+  /* Línea decorativa bajo los títulos */
+  #main-footer .footer-section h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 2px;
+    background-color: #3498db;
+  }
+  
+  /* Texto y enlaces */
+  #main-footer .footer-section p,
+  #main-footer .footer-section a {
+    color: #bdc3c7; /* Color gris claro */
+    margin-bottom: 0.8rem;
+    display: block;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    line-height: 1.6;
+  }
+  
+  /* Efecto hover para enlaces */
+  #main-footer .footer-section a:hover {
+    color: #3498db; /* Color azul al interactuar */
+  }
+  
+  /* Contenedor de íconos sociales */
+  #main-footer .social-icons {
+    display: flex;
+    gap: 1rem; /* Espacio entre íconos */
+    margin-top: 1rem;
+  }
+  
+  /* Estilos para los íconos sociales */
+  #main-footer .social-icons a {
+    width: 40px;
+    height: 40px;
+    background-color: #34495e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: #ffffff;
+  }
+  
+  /* Efecto hover para íconos */
+  #main-footer .social-icons a:hover {
+    background-color: #3498db;
+    transform: translateY(-3px);
+  }
+  
+  /* Sección inferior (copyright) */
+  #main-footer .footer-bottom {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #1a252f; /* Fondo más oscuro */
+    color: #95a5a6;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+  }
+  
+  /* Media queries para responsividad */
+  @media (max-width: 768px) {
+    #main-footer .footer-content {
+      grid-template-columns: 1fr; /* Una sola columna en móviles */
+      padding: 0 1.5rem;
+      gap: 2.5rem;
+    }
+    
+    #main-footer .footer-section {
+      text-align: center;
+    }
+    
+    #main-footer .footer-section h3::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    #main-footer .social-icons {
+      justify-content: center;
+    }
+    
+    #main-footer {
+      padding: 2rem 0 0;
+      margin-top: 3rem;
+    }
+  }
+  
+  /* Estilos adicionales para asegurar posición */
+  html, body, #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  body > #root {
+    flex: 1;
+  }
+
+
+  .whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #25D366;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.whatsapp-float:hover {
+    background-color: #128C7E;
+    transform: scale(1.1);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}

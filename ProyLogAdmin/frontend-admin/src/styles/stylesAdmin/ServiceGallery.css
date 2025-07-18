@@ -1,0 +1,64 @@
+.service-gallery {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery-title {
+  color: #2c3e50;
+  text-align: center;
+  margin: 2rem 0;
+  font-size: 1.8rem;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #7f8c8d;
+}
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #e74c3c;
+}
+
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .service-gallery {
+    padding: 1rem;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Estilo boton back*/
+.nav-button-container {
+  display: flex;
+  gap: 1rem;         /* Espacio entre botones */
+  justify-content: flex-start; /* Puedes cambiar a center o space-between */
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .nav-button-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
