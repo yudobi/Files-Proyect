@@ -6,6 +6,10 @@ import NewProduct from "./components/componentsAdmin/NewProduct";
 import NewService from "./components/componentsAdmin/NewService";
 import ServiceGallery from "./components/componentsAdmin/ServiceGallery";
 import EditService from "./components/componentsAdmin/EditService";
+import NewCategory from "./components/componentsAdmin/NewCategory";
+import Categories from "./components/componentsAdmin/Categories";
+import Brands from "./components/componentsAdmin/Brands";
+import NewBrand from "./components/componentsAdmin/NewBrand";
 
 
 import EditProduct from './components/componentsAdmin/EditProduct';
@@ -24,6 +28,13 @@ function App() {
          
         <Route path="/new-service" element={<NewService />} />
         <Route path="/edit-service/:id" element={<EditService />} />
+
+        <Route path="/new-category" element={<NewCategory />} />
+        {/*<Route path="/edit-category/:id" element={<EditCategory />} /> */}
+        <Route path="/categories" element={<Categories />} />
+        
+        <Route path="/brands" element={<Brands />} />
+        <Route path="/new-brand" element={<NewBrand />} />
        
         <Route path="/galery-services" element={<ServiceGallery />} />
         <Route path="/galery-products" element={<ProductGallery />} />
