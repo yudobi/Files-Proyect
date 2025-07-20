@@ -33,6 +33,32 @@ class RegisterSerializer(serializers.ModelSerializer):
             'refresh': str(refresh),
         }
 
+
+
+########################################################################
+# Serializer for Categoria model
+# This serializer is used to serialize and deserialize Product model instances
+########################################################################
+from .models import CategoriaImagen
+class CategoriaImagenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CategoriaImagen
+        fields = ['id', 'category', 'image', 'order']
+
+########################################################################
+# Serializer for Categoria model
+# This serializer is used to serialize and deserialize Product model instances
+########################################################################
+from rest_framework import serializers
+from .models import Category, Product
+
+class CategorySerializer(serializers.ModelSerializer):
+    cantidad_de_productos = serializers.IntegerField(read_only=True)
+    #images = CategoriaImagenSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Category
+        fields = ['id', 'name', 'description', 'image', 'cantidad_de_productos']
 ########################################################################
 # Serializer for Product model
 # This serializer is used to serialize and deserialize Product model instances
@@ -60,13 +86,19 @@ class ProductSerializer(serializers.ModelSerializer):
         source='brand',
         write_only=True
     )
+    category = CategorySerializer(read_only=True)
+    category_id = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(), 
+        source='category',
+        write_only=True
+    )
 
     class Meta:
         model = Product
         fields = [
             'id', 'title', 'description',
             'original_price', 'discount', 'price',
-            'stock', 'category', 'featured', 'category_deal',
+            'stock', 'category','category_id', 'featured', 'category_deal',
             'brand', 'images','brand_id'
         ]
         extra_kwargs = {

@@ -21,6 +21,7 @@ const EditProduct = () => {
   });
   const [existingImages, setExistingImages] = useState([]);
   const [brands, setBrands] = useState([]);
+  const [categorias, setCategorias] = useState([]);
   const [imageFiles, setImageFiles] = useState([]);
   const [imagesToDelete, setImagesToDelete] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,6 +44,10 @@ const EditProduct = () => {
         // Cargar marcas
         const brandsResponse = await api.get('brands/', { signal });
         setBrands(brandsResponse.data);
+
+        // Cargar categorías
+        const categoriasResponse = await api.get('categorias/', { signal });
+        setCategorias(categoriasResponse.data);
 
         // Cargar producto existente
         const productResponse = await api.get(`products/${id}/`, { signal });
@@ -94,6 +99,15 @@ const EditProduct = () => {
       brand: selectedBrand || null
     }));
   };
+
+  const handleCategoryChange = (e) => {
+  const selectedId = parseInt(e.target.value);
+  const selectedCategory = categorias.find(cat => cat.id === selectedId);
+  setFormData(prev => ({
+    ...prev,
+    category: selectedCategory || null,
+  }));
+ };
 
   const handleImageChange = (e) => {
     setImageFiles([...e.target.files]);
@@ -233,24 +247,37 @@ const EditProduct = () => {
               required
             />
           </div>
-
-          <div className="form-group">
-            <label>Categoría:</label>
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Seleccione...</option>
-              <option value="Electronics">Electrónica</option>
-              <option value="Ropa">Ropa</option>
-              <option value="Hogar">Hogar</option>
-              <option value="Deportes">Deportes</option>
-              <option value="Otros">Otros</option>
+           {/*Form para categorias***********************************/}
+        <div className="form-group">
+           <label>Categoría:</label>
+           <select
+             name="category"
+             value={formData.category?.id || ''}
+             onChange={handleCategoryChange}
+             required
+              >
+                <option value="">Seleccione una categoría</option>
+                 {categorias.map(cat => (
+                <option key={cat.id} value={cat.id}>
+                {cat.name}
+                </option>
+                ))}
             </select>
-          </div>
-        </div>
+
+                   {formData.category && (
+                     <div className="brand-preview">
+                       <small>Categoría seleccionada: {formData.category.name}</small>
+                          {formData.category.image && (
+                           <img
+                          src={formData.category.image}
+                          alt={formData.category.name}
+                          className="brand-logo-preview"
+                         />
+                      )}
+                    </div>
+                    )}
+                </div>
+           </div>
 
         <div className="form-row">
           <div className="form-group checkbox-group">
@@ -278,6 +305,7 @@ const EditProduct = () => {
           </div>
         </div>
 
+         {/*Form para marcas***********************************/}
         <div className="form-group">
           <label>Marca:</label>
           <select

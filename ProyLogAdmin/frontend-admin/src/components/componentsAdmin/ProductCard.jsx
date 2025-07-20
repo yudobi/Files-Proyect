@@ -100,7 +100,7 @@ const ProductCard = ({ product, onDelete }) => {
           )}
         </div>
         
-        <div className="category">{product.category}</div>
+        <div className="category">{product.category?.name}</div>
         
         {/* Botones de administración */}
         <div className="admin-actions">

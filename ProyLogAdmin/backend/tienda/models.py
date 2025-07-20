@@ -1,5 +1,44 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+
+
+##############################################################################################################################
+# Categorias imagenes
+##############################################################################################################################
+import os
+from django.db import models
+
+def categoria_image_path(instance, filename):
+    return os.path.join('categorias', str(instance.category.id), filename)
+
+class CategoriaImagen(models.Model):
+    category = models.ForeignKey('Category', related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField('Image', upload_to=categoria_image_path)
+    order = models.PositiveIntegerField('Order', default=0)
+
+    class Meta:
+        verbose_name = 'Category image'
+        verbose_name_plural = 'Category images'
+        ordering = ['order']
+
+    def __str__(self):
+        return f"Image {self.id} of {self.category.name}"
+
+##############################################################################################################################
+# Categorias
+##############################################################################################################################
+class Category(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='categorias/', null=True, blank=True)
+
+    @property
+    def cantidad_de_productos(self):
+        return self.products.count()
+
+    def __str__(self):
+        return self.name
+
 ##############################################################################################################################
 #  Parte de los productos
 ##############################################################################################################################
@@ -15,15 +54,7 @@ class Brand(models.Model):
         return self.name
 
 class Product(models.Model):
-    CATEGORIES = (
-        ('Electronics', 'Electronics'),
-        ('Ropa', 'Ropa'),
-        ('Hogar', 'Hogar'),
-        ('Deportes', 'Deportes'),
-        ('Otros', 'Otros'),
-
-     
-    )
+    
     
     ORIGINS = (
         ('USA', 'United States'),
@@ -43,7 +74,7 @@ class Product(models.Model):
     stock = models.PositiveIntegerField('Stock quantity', default=0)
     featured = models.BooleanField('Featured product', default=False)
     category_deal = models.BooleanField('Category deal', default=False)
-    category = models.CharField('Category', max_length=50, choices=CATEGORIES, default='Electronics')
+    category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True, related_name='products')  # 👈 clave nueva
     
     created_at = models.DateTimeField('Creation date', auto_now_add=True)
     updated_at = models.DateTimeField('Last update', auto_now=True)
@@ -128,5 +159,5 @@ class ServicioImagen(models.Model):
     def __str__(self):
         return f"Image {self.id} of {self.servicio.nombreServicio}"
 ##############################################################################################################################
-# 
+# Categorias
 ##############################################################################################################################

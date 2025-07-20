@@ -4,12 +4,10 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import RegisterSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
-from .models import Product, ProductImage, Brand
-from .serializers import ProductImageSerializer
-from .serializers import ProductSerializer, BrandSerializer
+from .models import Product, ProductImage, Brand ,Category , CategoriaImagen
+from .serializers import RegisterSerializer, ProductSerializer, BrandSerializer ,CategorySerializer ,ProductImageSerializer ,CategoriaImagenSerializer
 
 ########################################################################
 # View for user registration
@@ -42,6 +40,16 @@ class ProductImageViewSet(viewsets.ModelViewSet):
 class BrandViewSet(viewsets.ModelViewSet):
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class CategoriaImagenViewSet(viewsets.ModelViewSet):
+    queryset = CategoriaImagen.objects.all()
+    serializer_class = CategoriaImagenSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 class CreateGetBrandView(APIView):

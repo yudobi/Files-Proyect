@@ -9,7 +9,9 @@ from .views import (
     CreateGetBrandView,
     RegisterView,
     ServicioViewSet,
-    ServicioImagenViewSet
+    ServicioImagenViewSet,
+    CategoryViewSet,
+    CategoriaImagenViewSet
 )
 
 router = DefaultRouter()
@@ -19,6 +21,10 @@ router.register(r'brands', BrandViewSet, basename='brands')
 
 router.register(r'servicios', ServicioViewSet, basename='servicios')
 router.register(r'servicio-imagenes', ServicioImagenViewSet, basename='servicio-imagenes')
+
+router.register(r'categorias', CategoryViewSet, basename='categoria')
+router.register(r'categoria-imagenes', CategoriaImagenViewSet, basename='categoria-imagen')
+
 
 urlpatterns = [
     path('', include(router.urls)),

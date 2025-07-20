@@ -23,6 +23,10 @@ const NewProduct = () => {
   const [imageFiles, setImageFiles] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoadingBrands, setIsLoadingBrands] = useState(true);
+
+  const [categories, setCategories] = useState([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+
   const controllerRef = useRef(null);
 
   // Navegación para el botón de nuevo producto
@@ -36,6 +40,7 @@ const NewProduct = () => {
     controllerRef.current = new AbortController();
     const { signal } = controllerRef.current;
 
+    // Función para obtener las marcas
     const fetchBrands = async () => {
       try {
         const response = await api.get('brands/', { signal });
@@ -51,6 +56,20 @@ const NewProduct = () => {
     };
 
     fetchBrands();
+
+    // Función para obtener las categorias
+    const fetchCategories = async () => {
+      try {
+          const response = await api.get('categorias/');
+          setCategories(response.data);
+      } catch (error) {
+        toast.error('Error al cargar las categorías');
+      } finally {
+         setIsLoadingCategories(false);
+    }
+  };
+
+fetchCategories();
   }, []);
 
   const handleChange = (e) => {
@@ -69,6 +88,15 @@ const NewProduct = () => {
       brand: selectedBrand || null
     }));
   };
+
+  const handleCategoryChange = (e) => {
+  const selectedId = parseInt(e.target.value);
+  const selectedCategory = categories.find(cat => cat.id === selectedId);
+  setFormData(prev => ({
+    ...prev,
+    category: selectedCategory || null,
+  }));
+ };
 
   const handleImageChange = (e) => {
     setImageFiles([...e.target.files]);
@@ -90,8 +118,12 @@ const NewProduct = () => {
       formDataToSend.append('category', formData.category);
       formDataToSend.append('featured', formData.featured);
       formDataToSend.append('category_deal', formData.category_deal);
-      //formDataToSend.append('brand', formData.brand.id);
       
+      
+      
+      if (formData.category) {
+        formDataToSend.append('category_id', formData.category.id); // ✅
+      }
       {/* // Agregar brand (solo el ID)*/}
       if (formData.brand) {
         formDataToSend.append('brand_id', formData.brand.id);
@@ -214,22 +246,33 @@ const NewProduct = () => {
             />
           </div>
 
+             {/*Form para categorias***********************************/}
           <div className="form-group">
-            <label>Categoría:</label>
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Seleccione...</option>
-              <option value="Electronics">Electrónica</option>
-              <option value="Ropa">Ropa</option>
-              <option value="Hogar">Hogar</option>
-              <option value="Deportes">Deportes</option>
-              <option value="Otros">Otros</option>
-            </select>
-          </div>
+          <label>Categoría:</label>
+           {isLoadingCategories ? (
+           <p>Cargando categorías...</p>
+           ) : (
+          <select
+               name="category"
+               value={formData.category?.id || ''}
+               onChange={handleCategoryChange}
+               required
+          >
+              <option value="">Seleccione una categoría</option>
+                {categories.map(cat => (
+              <option key={cat.id} value={cat.id}>
+             {cat.name}
+              </option>
+           ))}
+          </select>
+         )}
+  
+         {formData.category && (
+         <div className="category-preview">
+         <small>Categoría seleccionada: {formData.category.name}</small>
+         </div>
+         )}
+         </div>
         </div>
 
         <div className="form-row">
@@ -258,6 +301,7 @@ const NewProduct = () => {
           </div>
         </div>
 
+        {/*Form para marcas**************************************** */}
         <div className="form-group">
           <label>Marca:</label>
           {isLoadingBrands ? (

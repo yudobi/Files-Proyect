@@ -31,6 +31,14 @@ function Dashboard() {
             <i className="fas fa-plus"></i> Servicios
           </Link>
 
+          <Link to="/galery-services" className="nav-button">
+            <i className="fas fa-plus"></i> Crear Marcas Productos
+          </Link>
+
+          <Link to="/galery-services" className="nav-button">
+            <i className="fas fa-plus"></i> Crear Categorias Productos
+          </Link>
+
           <button className="nav-button">
             <i className="fas fa-users"></i> Usuarios
           </button>
