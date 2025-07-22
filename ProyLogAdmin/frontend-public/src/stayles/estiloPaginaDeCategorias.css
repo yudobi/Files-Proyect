@@ -139,6 +139,25 @@
     margin: 0 auto;
 }
 
+
+
+/* Añade esto a tu archivo de estilos */
+.category-card {
+    /* Mantén todos tus estilos actuales */
+    cursor: pointer; /* Para indicar que es clickeable */
+}
+
+/* Estilo para categorías sin productos */
+.category-card[data-products="0"] {
+    opacity: 0.8;
+    filter: grayscale(20%);
+}
+
+.category-card[data-products="0"] .view-category {
+    pointer-events: none;
+    color: #95a5a6;
+}
+
 @media (max-width: 768px) {
     .categories-hero h1 {
         font-size: 2rem;
