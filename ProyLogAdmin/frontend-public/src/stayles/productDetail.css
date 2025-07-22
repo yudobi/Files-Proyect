@@ -13,6 +13,8 @@
   }
   
   .product-detail-content {
+
+    
     background: white;
     border-radius: 10px;
     max-width: 1000px;
@@ -22,5 +24,6 @@
     position: relative;
     padding: 2rem;
   }
-  
+
+
   /* Estilos adicionales para el detalle del producto */

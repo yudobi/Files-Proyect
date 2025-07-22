@@ -1,11 +1,17 @@
+/* Estilos base */
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
+  width: 100%;
+  max-width: 1400px;
+  padding: 1rem;
+  margin: 0 auto;
+}
   
-  .product-flex {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-  }
+/* Grid de productos */
+.product-flex {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 300px));
+  justify-content: center; /* Esto es clave */
+  gap: 2rem;
+  width: 100%;
+  padding: 0;
+}
