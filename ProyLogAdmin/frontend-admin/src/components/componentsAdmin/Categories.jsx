@@ -62,7 +62,16 @@ const Categories = () => {
           >
             <i className="fas fa-plus"></i> Nueva Categoría
           </button>
-          <div className="search-box">
+
+          <button 
+            onClick={() => navigate('/dashboard')}
+            className="add-button"
+          >
+            <i className="fas fa-plus"></i> Back
+          </button>
+         
+        </div>
+         <div className="search-box">
             <i className="fas fa-search"></i>
             <input
               type="text"
@@ -71,7 +80,6 @@ const Categories = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-        </div>
       </div>
 
       {isLoading ? (

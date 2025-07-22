@@ -54,14 +54,24 @@ const Brands = () => {
   return (
     <div className="brand-list-container">
       <div className="brand-list-header">
-        <h2>Listado de Marcas</h2>
-        <div className="actions">
+          <h2>Listado de Marcas</h2>
+
+          <div className="actions">
+            <button 
+              onClick={() => navigate('/new-brand')}
+              className="add-button"
+            >
+            <i className="fas fa-plus"></i> Nueva Marca
+            </button>
+
           <button 
-            onClick={() => navigate('/new-brand')}
+            onClick={() => navigate('/dashboard')}
             className="add-button"
           >
-            <i className="fas fa-plus"></i> Nueva Marca
+            <i className="fas fa-plus"></i> back
           </button>
+         </div>
+
           <div className="search-box">
             <i className="fas fa-search"></i>
             <input
@@ -70,8 +80,8 @@ const Brands = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-          </div>
-        </div>
+           </div>
+
       </div>
 
       {isLoading ? (
