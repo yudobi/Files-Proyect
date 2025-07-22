@@ -19,6 +19,7 @@ router.register(r'products', ProductViewSet, basename='products')
 router.register(r'product-images', ProductImageViewSet, basename='product-images')
 router.register(r'brands', BrandViewSet, basename='brands')
 
+
 router.register(r'servicios', ServicioViewSet, basename='servicios')
 router.register(r'servicio-imagenes', ServicioImagenViewSet, basename='servicio-imagenes')
 
