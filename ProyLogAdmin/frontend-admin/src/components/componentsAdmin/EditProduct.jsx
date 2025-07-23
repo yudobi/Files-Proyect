@@ -197,7 +197,7 @@ const EditProduct = () => {
     } finally {
       setIsSubmitting(false);
     }
-    console.log('Form Data:', formData);
+    
   };
 
   if (isLoading) {
