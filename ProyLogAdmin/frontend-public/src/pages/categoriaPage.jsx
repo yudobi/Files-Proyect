@@ -25,7 +25,7 @@ const CategoriaPage = () => {
         setCategoria(categoriaData);
 
         // 2. Obtener todos los productos
-        const productosResponse = await fetch('http://localhost:8000/api/productos/');
+        const productosResponse = await fetch('http://localhost:8000/api/products/');
         if (!productosResponse.ok) {
           throw new Error('Error al obtener productos');
         }
@@ -33,7 +33,7 @@ const CategoriaPage = () => {
 
         // Filtrar productos por categoría
         const productosFiltrados = productosData.filter(
-          producto => producto.categoria === categoriaData.tipoDeCategoria
+          producto => producto.category === categoriaData.name
         );
         setProductos(productosFiltrados);
 
@@ -73,7 +73,7 @@ const CategoriaPage = () => {
 
   return (
     <div className="container">
-      <h1 className="categoria-title">{categoria.tipoDeCategoria}</h1>
+      <h1 className="categoria-title">{categoria.name}</h1>
       
       
       <div className="product-flex">

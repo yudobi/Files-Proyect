@@ -66,7 +66,7 @@ class Product(models.Model):
     
     title = models.CharField('Title', max_length=200)
     description = models.TextField('Description')
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='products', blank=True, null=True)
+    brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, related_name='products', blank=True, null=True)
     origin = models.CharField('Origin', max_length=3, choices=ORIGINS, default='USA')
     original_price = models.DecimalField('Original price', max_digits=8, decimal_places=2)
     discount = models.PositiveIntegerField('Discount (%)', validators=[MinValueValidator(0), MaxValueValidator(100)], default=0)

@@ -64,13 +64,13 @@ const Brands = () => {
             <i className="fas fa-plus"></i> Nueva Marca
             </button>
 
-          <button 
-            onClick={() => navigate('/dashboard')}
-            className="add-button"
-          >
-            <i className="fas fa-plus"></i> back
-          </button>
-         </div>
+            <button 
+              onClick={() => navigate('/dashboard')}
+              className="add-button"
+            >
+              <i className="fas fa-plus"></i> back
+            </button>
+          </div>
 
           <div className="search-box">
             <i className="fas fa-search"></i>
@@ -82,7 +82,7 @@ const Brands = () => {
             />
            </div>
 
-      </div>
+        </div>
 
       {isLoading ? (
         <div className="loading-spinner">

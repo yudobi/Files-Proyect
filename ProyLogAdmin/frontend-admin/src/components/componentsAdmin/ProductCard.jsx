@@ -91,7 +91,7 @@ const ProductCard = ({ product, onDelete }) => {
             <div className="discount-badge">-{product.discount}%</div>
           )}
         </div>
-        
+        {/*<h4>{product?.category?.name || "Sin categoria"}</h4>*/}
         <div className="stock-info">
           {product.stock > 0 ? (
             <span className="in-stock">Disponible ({product.stock} unidades)</span>

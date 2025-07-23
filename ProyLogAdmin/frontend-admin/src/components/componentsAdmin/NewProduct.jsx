@@ -106,6 +106,8 @@ fetchCategories();
     e.preventDefault();
     setIsSubmitting(true);
 
+    
+
     try {
       const formDataToSend = new FormData();
       
@@ -175,6 +177,7 @@ fetchCategories();
     } finally {
       setIsSubmitting(false);
     }
+    console.log('Form Data:', formData);
   };
   
   return (
