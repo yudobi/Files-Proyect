@@ -15,11 +15,11 @@ const ServiciosPrincipales = () => {
                     throw new Error('Error al obtener los servicios');
                 }
                 const data = await response.json();
-                setServicios(data);
+                setServicios(data.results || []); // Asegúrate de que la estructura de datos sea correcta
                 
                 // Inicializar el índice de imagen actual para cada servicio
                 const initialIndexes = {};
-                data.forEach(servicio => {
+                data.results.forEach(servicio => {
                     initialIndexes[servicio.id] = 0;
                 });
                 setCurrentImageIndex(initialIndexes);

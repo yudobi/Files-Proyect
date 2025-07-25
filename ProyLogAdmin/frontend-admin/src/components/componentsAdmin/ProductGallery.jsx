@@ -27,7 +27,7 @@ const ProductGallery = () => {
     const fetchProducts = async () => {
       try {
         const response = await api.get('products/'); // Ajusta la URL según tu API
-        setProducts(response.data);
+        setProducts(response.data.products || []); // Asegúrate de que la estructura de datos sea correcta
         setLoading(false);
       } catch (err) {
         setError(err.message);

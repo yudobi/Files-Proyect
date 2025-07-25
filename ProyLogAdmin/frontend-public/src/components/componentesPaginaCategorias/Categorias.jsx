@@ -16,7 +16,7 @@ const Categorias = () => {
                     throw new Error('Error al obtener las categorías');
                 }
                 const data = await response.json();
-                setCategorias(data);
+                setCategorias(data.results || []);
             } catch (err) {
                 setError(err.message);
             } finally {

@@ -109,7 +109,12 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '30/minute',  # Límite para no autenticados
         'user': '100/minute',  # Límite para autenticados
-    }
+    },
+
+      # Añade estas configuraciones para la paginación
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 12,  # Tamaño de página por defecto
+    
 }
 
 from datetime import timedelta

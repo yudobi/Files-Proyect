@@ -23,7 +23,7 @@ const ServiceGallery = () => {
     const fetchServices = async () => {
       try {
         const response = await api.get('servicios/');
-        setServices(response.data);
+        setServices(response.data.results);
         setLoading(false);
       } catch (err) {
         setError(err.message);

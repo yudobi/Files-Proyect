@@ -43,11 +43,11 @@ const EditProduct = () => {
       try {
         // Cargar marcas
         const brandsResponse = await api.get('brands/', { signal });
-        setBrands(brandsResponse.data);
+        setBrands(brandsResponse.data.results || []);
 
         // Cargar categorías
         const categoriasResponse = await api.get('categorias/', { signal });
-        setCategorias(categoriasResponse.data);
+        setCategorias(categoriasResponse.data.results || []);
 
         // Cargar producto existente
         const productResponse = await api.get(`products/${id}/`, { signal });

@@ -14,16 +14,18 @@ const ProductDetail = () => {
 
   useEffect(() => {
     const fetchProductos = async () => {
+      setLoading(true);
       try {
         const response = await fetch("http://localhost:8000/api/products/");
 
         if (!response.ok) {
           throw new Error("Error al cargar los productos");
         }
+       
 
         const data = await response.json();
-        setProductos(data);
-
+        setProductos(data.products || []);
+        
       } catch (err) {
         setError(err.message);
       } finally {
@@ -32,6 +34,7 @@ const ProductDetail = () => {
     }
 
     fetchProductos();
+    
   }, []);
 
   if (loading) {

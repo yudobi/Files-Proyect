@@ -15,7 +15,7 @@ const Categories = () => {
     const fetchCategories = async () => {
       try {
         const response = await api.get('categorias/');
-        setCategories(response.data);
+        setCategories(response.data.results || []);
       } catch (error) {
         toast.error('Error al cargar las categorías', {
           position: "top-right",

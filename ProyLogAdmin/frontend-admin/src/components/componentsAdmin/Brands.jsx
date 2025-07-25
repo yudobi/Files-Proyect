@@ -15,7 +15,7 @@ const Brands = () => {
     const fetchBrands = async () => {
       try {
         const response = await api.get('brands/');
-        setBrands(response.data);
+        setBrands(response.data.results);
       } catch (error) {
         toast.error('Error al cargar las marcas', {
           position: "top-right",

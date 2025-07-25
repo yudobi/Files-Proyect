@@ -21,6 +21,29 @@ class RegisterView(APIView):
             user = serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+########################################################################
+# Vistas para paginacion
+# Estas vistas manejan la paginación de los productos
+########################################################################  
+from rest_framework.pagination import PageNumberPagination
+
+class ProductPagination(PageNumberPagination):
+    page_size = 12
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+    def get_paginated_response(self, data):
+        return Response({
+            'success': True,
+            'total_items': self.page.paginator.count,
+            'total_pages': self.page.paginator.num_pages,
+            'current_page': self.page.number,
+            'next_page': self.get_next_link(),
+            'previous_page': self.get_previous_link(),
+            'items_per_page': self.get_page_size(self.request),
+            'products': data  # Aquí van los productos serializados
+        })
 
 ########################################################################
 # View for Product model
@@ -31,6 +54,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    pagination_class = ProductPagination  # Añade esta línea
 
 class ProductImageViewSet(viewsets.ModelViewSet):
     queryset = ProductImage.objects.all()
@@ -89,4 +113,3 @@ class ServicioImagenViewSet(viewsets.ModelViewSet):
     serializer_class = ServicioImagenSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
-   

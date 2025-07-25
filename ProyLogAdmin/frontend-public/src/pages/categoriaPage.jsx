@@ -36,7 +36,7 @@ const CategoriaPage = () => {
         setCategoria(categoriaData);
 
         // Filtrar productos por ID de categoría (mejor que por nombre)
-        const productosFiltrados = productosData.filter(
+        const productosFiltrados = productosData.products.filter(
           producto => producto.category?.id === categoriaData.id
         );
         
