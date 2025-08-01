@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 """ SECRET_KEY = 'django-insecure-6$il6_dyls7rk1)f)hnh^tc$45@e(7cy+gngt6%m0$ww!khq-a' """
 SECRET_KEY = os.getenv('SECRET_KEY')  # Define esta variable en Render
+DATABASE_URL = os.getenv('DATABASE_URL')  # Define esta variable en Render
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False

@@ -22,9 +22,16 @@ from rest_framework_simplejwt.views import (
 )
 from django.conf import settings
 from django.conf.urls.static import static
+# # # # # # # # # # # # # # # # # # # # # # # # 
+# vista para la api
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+from django.http import HttpResponse
 
-
+def home(request):
+    return HttpResponse("¡Bienvenido a mi API Django!")
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 urlpatterns = [
+    path('', home),
     path('admin/', admin.site.urls),
     path('api/', include('tienda.urls')),  # Changed from 'tienda' to 'store' for consistency
     # Token endpoints
