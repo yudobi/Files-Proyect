@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')  # Define esta variable en Render
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['tu-backend.onrender.com', 'localhost']
+ALLOWED_HOSTS = ['backend-kik3.onrender.com', 'localhost']
 ################################################
 #AUTH_USER_MODEL = 'authentication.CustomUser'
 
@@ -96,6 +96,7 @@ CORS_ALLOWED_ORIGINS = [
      "http://localhost:5175",
     "http://127.0.0.1:5175",
     #Para producción
+    "https://backend-kik3.onrender.com/"
     "https://tufrontend-admin.vercel.app",
     "https://tufrontend-public.vercel.app",
 ]
