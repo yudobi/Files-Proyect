@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,24 +22,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6$il6_dyls7rk1)f)hnh^tc$45@e(7cy+gngt6%m0$ww!khq-a'
+""" SECRET_KEY = 'django-insecure-6$il6_dyls7rk1)f)hnh^tc$45@e(7cy+gngt6%m0$ww!khq-a' """
+SECRET_KEY = os.getenv('SECRET_KEY')  # Define esta variable en Render
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['tu-backend.onrender.com', 'localhost']
 ################################################
 #AUTH_USER_MODEL = 'authentication.CustomUser'
 
 ################################################
-from dotenv import load_dotenv
-import os
+# Cargar variables de entorno desde un archivo .env /solo para desarrollo local
 
-load_dotenv()
+#from dotenv import load_dotenv  
+#load_dotenv()
 
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
 ################################################
 # Configuración de Email
+"""
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -45,8 +49,9 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'jorgeantonioramirezricardo@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'jorgeantonioramirezricardo@gmail.com'
+"""
 ################################################ 
-
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ################################################
 
@@ -70,6 +75,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Middleware para servir archivos estáticos
     'django.contrib.sessions.middleware.SessionMiddleware',
     ##################
     "corsheaders.middleware.CorsMiddleware",
@@ -89,6 +95,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5174",
      "http://localhost:5175",
     "http://127.0.0.1:5175",
+    #Para producción
+    "https://tufrontend-admin.vercel.app",
+    "https://tufrontend-public.vercel.app",
 ]
 ######################################################
 
@@ -154,6 +163,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -163,6 +173,19 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT':'',
     }
+}
+"""
+
+# Base de datos (Render usará DATABASE_URL)
+
+import dj_database_url
+
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),  # Leerá la variable de entorno
+        conn_max_age=600
+    )
 }
 
 # Password validation
@@ -223,5 +246,12 @@ SECURE_PASSWORD_VALIDATORS = [
 # Esto es necesario para manejar archivos subidos por los usuarios, como imágenes de productos.
 import os
 
+"""
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+"""
+
+# Static files (usando Whitenoise)
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
