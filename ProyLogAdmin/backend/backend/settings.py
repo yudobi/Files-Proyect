@@ -11,45 +11,117 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+################################################
+
+
+load_dotenv()
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key-for-development')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+
+################################################
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6$il6_dyls7rk1)f)hnh^tc$45@e(7cy+gngt6%m0$ww!khq-a'
+#Desarrollo
+#SECRET_KEY = 'django-insecure-6$il6_dyls7rk1)f)hnh^tc$45@e(7cy+gngt6%m0$ww!khq-a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#Desarrollo
+#DEBUG = True
 
-ALLOWED_HOSTS = []
-################################################
-#AUTH_USER_MODEL = 'authentication.CustomUser'
 
 ################################################
-from dotenv import load_dotenv
-import os
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
+if not ALLOWED_HOSTS[0]:
+    ALLOWED_HOSTS = []
 
-load_dotenv()
-
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-################################################
-# Configuración de Email
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'jorgeantonioramirezricardo@gmail.com'
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = 'jorgeantonioramirezricardo@gmail.com'
-################################################ 
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Agregar después de ALLOWED_HOSTS
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com",
+    "http://localhost:5173",
+]
 ################################################
 
+# Add Render host
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+
+# Database configuration
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+}
+
+"""DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ProyLogAdmin',
+        'USER': 'postgres',
+        'PASSWORD': '96081520908',
+        'HOST': 'localhost',
+        'PORT':'',
+    }
+}"""
+
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+"""
+desarrollo
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+"""
+
+
+
+# CORS configuration for production
+if DEBUG:
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5174",
+        "http://localhost:5175",
+        "http://127.0.0.1:5175",
+    ]
+else:
+    CORS_ALLOWED_ORIGINS = [
+        ############################################################/////////////////////////////////
+        "https://tu-frontend-en-render.com",  # Reemplaza con tu URL de frontend
+        ############################################################/////////////////////////////////
+    ]
+
+    # Security settings for production
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -70,10 +142,11 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     ##################
     "corsheaders.middleware.CorsMiddleware",
-    ##################
+    #################
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -81,16 +154,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-######################################################
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-     "http://localhost:5174",
-    "http://127.0.0.1:5174",
-     "http://localhost:5175",
-    "http://127.0.0.1:5175",
-]
-######################################################
+
 
 # Configuración de tokens
 REST_FRAMEWORK = {
@@ -154,16 +218,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ProyLogAdmin',
-        'USER': 'postgres',
-        'PASSWORD': '96081520908',
-        'HOST': 'localhost',
-        'PORT':'',
-    }
-}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -221,7 +276,5 @@ SECURE_PASSWORD_VALIDATORS = [
 
 # Configuración de archivos multimedia
 # Esto es necesario para manejar archivos subidos por los usuarios, como imágenes de productos.
-import os
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
