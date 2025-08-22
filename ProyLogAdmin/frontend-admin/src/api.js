@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Crear la instancia
 const api = axios.create({
-  baseURL: "http://localhost:8000/api/", // Ajusta si usas una URL diferente
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000/api", // Ajusta si usas una URL diferente
 });
 
 // Interceptor de solicitud: agrega el token de acceso al header Authorization
