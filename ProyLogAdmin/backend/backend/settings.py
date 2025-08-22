@@ -111,7 +111,7 @@ if DEBUG:
 else:
     CORS_ALLOWED_ORIGINS = [
         ############################################################/////////////////////////////////
-        "https://tu-frontend-en-render.com",  # Reemplaza con tu URL de frontend
+        "https://frontend-admin-zh1s.onrender.com",  # Reemplaza con tu URL de frontend
         ############################################################/////////////////////////////////
     ]
 
