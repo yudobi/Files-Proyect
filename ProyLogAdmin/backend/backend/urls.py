@@ -23,8 +23,13 @@ from rest_framework_simplejwt.views import (
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("Servidor Django en Render funcionando 🚀")
 
 urlpatterns = [
+    path('', home),   # <- ruta raíz
     path('admin/', admin.site.urls),
     path('api/', include('tienda.urls')),  # Changed from 'tienda' to 'store' for consistency
     # Token endpoints
