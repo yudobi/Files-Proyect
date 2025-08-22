@@ -51,7 +51,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5174",
     "http://localhost:5175",
     "http://127.0.0.1:5175",
-    "https://backend-8gff.onrender.com",
+    "https://backend-x1i1.onrender.com",
     "https://tufrontend-admin.vercel.app",
     "https://tufrontend-public.vercel.app",
 ]
