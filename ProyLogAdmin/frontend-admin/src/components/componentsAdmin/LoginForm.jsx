@@ -10,7 +10,7 @@ function LoginForm({ onLogin }) {
     e.preventDefault();
     setError("");
     try {
-      const res = await axios.post("http://localhost:8000/api/token/", credentials);
+      const res = await axios.post( `${import.meta.env.VITE_API_URL}/token/`, credentials );
       localStorage.setItem("access", res.data.access);
       localStorage.setItem("refresh", res.data.refresh);
       onLogin();
