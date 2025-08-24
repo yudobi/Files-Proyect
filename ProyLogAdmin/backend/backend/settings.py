@@ -70,16 +70,16 @@ DATABASES = {
     )
 }
 
-"""DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ProyLogAdmin',
-        'USER': 'postgres',
-        'PASSWORD': '96081520908',
-        'HOST': 'localhost',
-        'PORT':'',
+        'NAME': 'postgresql_ccox',
+        'USER': 'postgresql_ccox_user',
+        'PASSWORD': 'zjIVAb9IIkQoMsO1SM0iEF7h9XvtqJzP',
+        'HOST': 'dpg-d2kbsdbe5dus7392n6mg-a.oregon-postgres.render.com',
+        'PORT':'5432',
     }
-}"""
+}   
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
