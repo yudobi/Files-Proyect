@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../../stayles/estiloPaginaDeServicios.css";
+import api from '../../api'; // Asegúrate de que la ruta sea correcta
 
 const ServiciosPrincipales = () => {
     const [servicios, setServicios] = useState([]);
@@ -10,11 +11,9 @@ const ServiciosPrincipales = () => {
     useEffect(() => {
         const fetchServicios = async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/servicios/');
-                if (!response.ok) {
-                    throw new Error('Error al obtener los servicios');
-                }
-                const data = await response.json();
+                const response = await api.get('/servicios/');
+                
+                const data = response.data;
                 setServicios(data.results || []); // Asegúrate de que la estructura de datos sea correcta
                 
                 // Inicializar el índice de imagen actual para cada servicio

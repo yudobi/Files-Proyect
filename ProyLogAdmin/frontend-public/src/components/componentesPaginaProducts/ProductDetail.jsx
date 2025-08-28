@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faTimes } from '@fortawesome/free-solid-svg-icons';
+import api from '../../api'; // Asegúrate de que la ruta sea correcta
 
 const ProductDetail = () => {
   const [productos, setProductos] = useState([]);
@@ -16,18 +17,12 @@ const ProductDetail = () => {
     const fetchProductos = async () => {
       setLoading(true);
       try {
-        const response = await fetch("http://localhost:8000/api/products/");
+        const response = await api.get("/products/");
 
-        if (!response.ok) {
-          throw new Error("Error al cargar los productos");
-        }
-       
-
-        const data = await response.json();
-        setProductos(data.products || []);
+        setProductos(response.data.products || []);
         
       } catch (err) {
-        setError(err.message);
+        setError(err.message || "Error al cargar los productos");
       } finally {
         setLoading(false);
       }

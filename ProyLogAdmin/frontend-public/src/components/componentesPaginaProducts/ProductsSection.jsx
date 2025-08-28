@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
 import '../../stayles/ProductsSection.css';
 import Pagination from '../componentesGenerales/Pagination';
+import api from '../../api'; // Asegúrate de que la ruta sea correcta
 
 const ProductsSection = () => {
   const [products, setProducts] = useState([]);
@@ -21,14 +22,16 @@ const ProductsSection = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `http://localhost:8000/api/products/?page=${pagination.currentPage}&featured=true`,
-          { signal }
-        );
+        setError(null);
+        const response = await api.get(
+          `/products/`,{
+            params: {
+              page: pagination.currentPage,
+              featured: true
+            },
+           signal 
+      });
 
-        if (!response.ok) {
-          throw new Error(`Error ${response.status}: ${response.statusText}`);
-        }
 
         const data = await response.json();
         
@@ -44,8 +47,11 @@ const ProductsSection = () => {
           itemsPerPage: data.items_per_page
         });
       } catch (err) {
-        if (err.name !== 'AbortError') {
-          setError(err.message);
+          if (err.name === 'CanceledError' || err.name === 'AbortError') {
+          console.log('Petición cancelada');
+        } else {
+          const errorMessage = err.response?.data?.message || err.message || 'Error al obtener productos';
+          setError(errorMessage);
           console.error('Error fetching products:', err);
         }
       } finally {

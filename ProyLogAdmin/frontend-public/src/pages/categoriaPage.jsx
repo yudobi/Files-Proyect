@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductCard from '../components/componentesPaginaProducts/ProductCard';
 import '../stayles/estiloPaginaDeCategorias.css'; // Asegúrate de tener este archivo CSS
+import api from '../api'; // Asegúrate de que la ruta sea correcta
 
 const CategoriaPage = () => {
   const { id } = useParams();
@@ -21,17 +22,15 @@ const CategoriaPage = () => {
         
         // 1. Obtener la categoría específica
         const [categoriaResponse, productosResponse] = await Promise.all([
-          fetch(`http://localhost:8000/api/categorias/${id}/`, { signal }),
-          fetch('http://localhost:8000/api/products/', { signal })
+          api.get(`/categorias/${id}/`, { signal }),
+          api.get('/products/', { signal })
         ]);
-
-        if (!categoriaResponse.ok) throw new Error('Categoría no encontrada');
-        if (!productosResponse.ok) throw new Error('Error al obtener productos');
 
         const [categoriaData, productosData] = await Promise.all([
-          categoriaResponse.json(),
-          productosResponse.json()
+          categoriaResponse.data,
+          productosResponse.data
         ]);
+         
 
         setCategoria(categoriaData);
 
@@ -43,8 +42,12 @@ const CategoriaPage = () => {
         setProductos(productosFiltrados);
 
       } catch (err) {
-        if (err.name !== 'AbortError') {
-          setError(err.message);
+        if (err.name !== 'CanceledError' && err.name !== 'AbortError') {
+          // MODIFICADO: Mejor manejo de errores de Axios
+          const errorMessage = err.response?.data?.message || 
+                             err.message || 
+                             'Error al cargar los datos';
+          setError(errorMessage);
         }
       } finally {
         setLoading(false);

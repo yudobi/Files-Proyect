@@ -1,6 +1,7 @@
 import "../../stayles/estiloPaginaDeCategorias.css";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../../api'; // Asegúrate de que la ruta sea correcta
 
 const Categorias = () => {
     const [categorias, setCategorias] = useState([]);
@@ -11,14 +12,12 @@ const Categorias = () => {
     useEffect(() => {
         const fetchCategorias = async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/categorias/');
-                if (!response.ok) {
-                    throw new Error('Error al obtener las categorías');
-                }
-                const data = await response.json();
-                setCategorias(data.results || []);
+                const response = await api.get('/categorias/');
+               
+                setCategorias(response.data.results || []);
+
             } catch (err) {
-                setError(err.message);
+                setError(err.message || 'Error al obtener las categorías');
             } finally {
                 setLoading(false);
             }

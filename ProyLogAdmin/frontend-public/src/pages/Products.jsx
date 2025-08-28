@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from '../components/componentesPaginaProducts/ProductCard';
 import Pagination from '../components/componentesGenerales/Pagination';
+import api from '../api'; // Asegúrate de que la ruta sea correcta";
+
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -16,15 +18,15 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8000/api/products/?page=${pagination.currentPage}&page_size=${pagination.itemsPerPage}`
-        );
+        const response = await api.get(
+          `/products/`, {
+            params: {
+              page: pagination.currentPage,
+              page_size: pagination.itemsPerPage
+            }
+      });
 
-        if (!response.ok) {
-          throw new Error('Error al obtener los productos');
-        }
-
-        const data = await response.json();
+        const data = await response.data;
         
         if (data.success) {
           setProducts(data.products);
@@ -37,7 +39,10 @@ const Products = () => {
           throw new Error('Formato de respuesta inesperado');
         }
       } catch (err) {
-        setError(err.message);
+         const errorMessage = err.response?.data?.message || 
+                           err.message || 
+                           'Error al obtener los productos';
+        setError(errorMessage);
       } finally {
         setLoading(false);
       }
