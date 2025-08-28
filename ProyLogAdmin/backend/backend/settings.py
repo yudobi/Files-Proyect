@@ -102,7 +102,7 @@ INSTALLED_APPS = [
      ##################
     'authentication',
     'tienda',
-    'django_extensions',
+    #'django_extensions',
 ]
 
 MIDDLEWARE = [
