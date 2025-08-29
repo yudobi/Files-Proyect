@@ -7,7 +7,7 @@ import Categories from '../pages/Categories';
 import Services from '../pages/Services';
 import NotFound from '../pages/NotFound';
 import ProductDetail from '../components/componentesPaginaProducts/ProductDetail';
-import CategoriaPage from '../pages/CategoriaPage' ;
+import CategoriaPage from "../pages/CategoriaPage";
 
 const AppRoutes = () => {
   return (
