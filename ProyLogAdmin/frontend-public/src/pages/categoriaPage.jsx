@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductCard from '../components/componentesPaginaProducts/ProductCard';
 import '../stayles/estiloPaginaDeCategorias.css'; // Asegúrate de tener este archivo CSS
-import api from '../api'; // Asegúrate de que la ruta sea correcta
+import api from '../api'; // Asegúrate de que la ruta sea 
 
 const CategoriaPage = () => {
   const { id } = useParams();
