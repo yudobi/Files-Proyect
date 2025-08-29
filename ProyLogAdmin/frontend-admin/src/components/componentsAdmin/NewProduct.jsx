@@ -44,7 +44,8 @@ const NewProduct = () => {
     const fetchBrands = async () => {
       try {
         const response = await api.get('brands/', { signal });
-        setBrands(response.data);
+        setBrands(response.data.results);
+        setLoading(false);
       } catch (error) {
         toast.error('Error al cargar las marcas', {
           position: "top-right",
@@ -61,7 +62,8 @@ const NewProduct = () => {
     const fetchCategories = async () => {
       try {
           const response = await api.get('categorias/');
-          setCategories(response.data);
+          setCategories(response.data.results);
+          setLoading(false);
       } catch (error) {
         toast.error('Error al cargar las categorías');
       } finally {
