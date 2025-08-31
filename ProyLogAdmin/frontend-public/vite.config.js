@@ -5,9 +5,15 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
-    sourcemap: false
+    sourcemap: false,
+    // ✅ AÑADE ESTO - Es crucial para producción
+    rollupOptions: {
+      input: './index.html'
+    }
   },
   server: {
     open: true
-  }
+  },
+  // ✅ AÑADE ESTO también - Para paths relativos
+  base: './'
 })
