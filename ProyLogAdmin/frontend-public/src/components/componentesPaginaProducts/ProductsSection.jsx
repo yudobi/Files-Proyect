@@ -33,7 +33,7 @@ const ProductsSection = () => {
       });
 
 
-        const data = await response.json();
+        const data = await response.data;
         
         if (!data.success) {
           throw new Error('La respuesta del servidor no fue exitosa');
@@ -50,6 +50,7 @@ const ProductsSection = () => {
           if (err.name === 'CanceledError' || err.name === 'AbortError') {
           console.log('Petición cancelada');
         } else {
+         // ✅ Manejo correcto de errores con axios
           const errorMessage = err.response?.data?.message || err.message || 'Error al obtener productos';
           setError(errorMessage);
           console.error('Error fetching products:', err);
