@@ -50,7 +50,7 @@ const Brands = () => {
   const filteredBrands = brands.filter(brand =>
     brand.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
+  
   return (
     <div className="brand-list-container">
       <div className="brand-list-header">

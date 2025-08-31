@@ -62,7 +62,7 @@ const Products = () => {
   if (error) {
     return <div className="container">Error: {error}</div>;
   }
-
+  
   return (
     <div className="container">
       <h1>Todos nuestros productos ({pagination.totalItems})</h1>
