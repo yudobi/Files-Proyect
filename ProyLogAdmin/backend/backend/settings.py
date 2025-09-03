@@ -77,10 +77,18 @@ CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+      'OPTIONS': {
+            'quality': 'auto:good',
+            'fetch_format': 'auto',
+        }
 }
 
 # Usa Cloudinary para archivos media
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Configuración adicional
+WHITENOISE_MAX_AGE = 315360000
+WHITENOISE_IMMUTABLE_FILE_TEST = lambda path, url: url.startswith('/static/')
 ################################################################################################
 
 # CORS configuration for production
@@ -242,6 +250,3 @@ SECURE_PASSWORD_VALIDATORS = [
     # Otros validadores...
 ]
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
