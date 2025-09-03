@@ -14,6 +14,41 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+# En tu archivo urls.py principal
+from django.http import JsonResponse
+from django.conf import settings
+import cloudinary
+import cloudinary.uploader
+
+def cloudinary_diagnostic(request):
+    try:
+        # Probar subida a Cloudinary
+        test_upload = cloudinary.uploader.upload(
+            "https://res.cloudinary.com/demo/image/upload/w_100/docs/cloudinary_logo.png",
+            folder="test_diagnostic"
+        )
+        upload_success = True
+        upload_url = test_upload['url']
+    except Exception as e:
+        upload_success = False
+        upload_error = str(e)
+    
+    return JsonResponse({
+        'debug': settings.DEBUG,
+        'cloud_name': settings.CLOUDINARY_STORAGE.get('CLOUD_NAME'),
+        'api_key_configured': bool(settings.CLOUDINARY_STORAGE.get('API_KEY')),
+        'api_secret_configured': bool(settings.CLOUDINARY_STORAGE.get('API_SECRET')),
+        'default_storage': settings.DEFAULT_FILE_STORAGE,
+        'cloudinary_upload_test': {
+            'success': upload_success,
+            'url': upload_url if upload_success else None,
+            'error': upload_error if not upload_success else None
+        }
+    })
+
+
+
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import (
@@ -35,6 +70,7 @@ urlpatterns = [
     # Token endpoints
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # login endpoint
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # token refresh endpoint
+    path('diagnostic/', cloudinary_diagnostic, name='cloudinary_diagnostic'),
 ]
 
 # If in DEBUG mode, add routes to serve static and media files
