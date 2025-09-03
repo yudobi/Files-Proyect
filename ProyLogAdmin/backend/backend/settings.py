@@ -69,6 +69,19 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Configuración de Cloudinary
+################################################################################################
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+# Usa Cloudinary para archivos media
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+################################################################################################
 
 # CORS configuration for production
 CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
@@ -78,6 +91,7 @@ CORS_ALLOWED_ORIGINS = [origin.strip() for origin in CORS_ALLOWED_ORIGINS if ori
 # Después de CORS_ALLOWED_ORIGINS, añade:
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = DEBUG  # Solo permitir todos en desarrollo
+
 
 
     # Security settings for production
@@ -103,6 +117,8 @@ INSTALLED_APPS = [
     'authentication',
     'tienda',
     #'django_extensions',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -208,7 +224,7 @@ USE_TZ = True
 
 
 
-STATIC_URL = 'static/'
+
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
