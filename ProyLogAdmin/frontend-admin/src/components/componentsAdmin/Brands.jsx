@@ -108,7 +108,7 @@ const Brands = () => {
                     alt={brand.name} 
                     className="brand-logo"
                     onError={(e) => {
-                      e.target.src = 'https://placehold.co/150x150/f0f0f0/999?text=No+Logo';
+                      e.target.src = 'https://django-media-jo.s3.us-east-2.amazonaws.com/img6.jpeg';
                     }}
                   />
                 ) : (
