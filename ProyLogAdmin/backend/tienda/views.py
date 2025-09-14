@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Product, ProductImage, Brand ,Category , CategoriaImagen
 from .serializers import RegisterSerializer, ProductSerializer, BrandSerializer ,CategorySerializer ,ProductImageSerializer ,CategoriaImagenSerializer
+from rest_framework.parsers import MultiPartParser, FormParser
 
 ########################################################################
 # View for user registration
@@ -62,6 +63,7 @@ class BrandViewSet(viewsets.ModelViewSet):
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    parser_classes = (MultiPartParser, FormParser)  # ← Esto permite recibir archivos
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
