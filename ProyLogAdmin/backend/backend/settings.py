@@ -77,7 +77,7 @@ WHITENOISE_IMMUTABLE_FILE_TEST = lambda path, url: url.startswith('/static/')
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-1')
+AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', 'us-east-2')
 AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 # Opcional: URLs públicas limpias sin query string
@@ -259,3 +259,19 @@ SECURE_PASSWORD_VALIDATORS = [
     # Otros validadores...
 ]
 
+
+
+
+
+############################################################################# Agrega esto al final de settings.py
+
+# AL FINAL de settings.py agrega:
+from storages.backends.s3boto3 import S3Boto3Storage
+import django.core.files.storage
+
+# Sobrescribe el storage por defecto
+django.core.files.storage.default_storage = S3Boto3Storage()
+
+# Verificación
+print(f"Storage configurado: {DEFAULT_FILE_STORAGE}")
+print(f"Storage actual: {django.core.files.storage.default_storage.__class__}")

@@ -6,13 +6,23 @@ from .views import (
     ProductViewSet,
     ProductImageViewSet,
     BrandViewSet,
-    CreateGetBrandView,
+    #CreateGetBrandView,
     RegisterView,
     ServicioViewSet,
     ServicioImagenViewSet,
     CategoryViewSet,
     CategoriaImagenViewSet
 )
+from . import views
+
+
+from django.http import JsonResponse
+
+def debug_request(request):
+    print("🎯 DEBUG ENDPOINT HIT!")
+    print("Method:", request.method)
+    print("Headers:", dict(request.headers))
+    return JsonResponse({"status": "ok", "message": "Request recibida"})
 
 router = DefaultRouter()
 router.register(r'products', ProductViewSet, basename='products')
@@ -30,7 +40,9 @@ router.register(r'categoria-imagenes', CategoriaImagenViewSet, basename='categor
 urlpatterns = [
     path('', include(router.urls)),
     path('register/', RegisterView.as_view(), name='register'),  # User registration endpoint
-    path('create-brand/', CreateGetBrandView.as_view(), name='create_or_get_brand'),
+    #path('create-brand/', CreateGetBrandView.as_view(), name='create_or_get_brand'),
+    path('mirror-request/', views.mirror_request, name='mirror-request'),
+    path('debug/', debug_request),
 ]
 
 # If in DEBUG mode, add media URL patterns

@@ -74,9 +74,25 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = ['id', 'image', 'order','product']
 #-----------------------------------------------------------------
 class BrandSerializer(serializers.ModelSerializer):
+    logo = serializers.ImageField(required=False)  # 👈 Esto permite la subida de archivos
+    
     class Meta:
         model = Brand
         fields = ['id', 'name', 'logo']
+    
+    def create(self, validated_data):
+        # Maneja la creación con el archivo
+        return Brand.objects.create(**validated_data)
+    
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        
+        # Actualiza el logo si se proporciona uno nuevo
+        if 'logo' in validated_data:
+            instance.logo = validated_data['logo']
+        
+        instance.save()
+        return instance
 #-----------------------------------------------------------------
 class ProductSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True, read_only=True)
@@ -114,7 +130,8 @@ from .models import Servicio, ServicioImagen
 class ServicioImagenSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServicioImagen
-        fields = ['id', 'service', 'image', 'order']
+        fields = ['id', 'image', 'order']
+       
 
 class ServicioSerializer(serializers.ModelSerializer):
     images = ServicioImagenSerializer(many=True, read_only=True)
@@ -126,5 +143,6 @@ class ServicioSerializer(serializers.ModelSerializer):
             'precio': {'required': False, 'read_only': True},  # Marca el campo como no requerido y solo lectura
             'precioOriginal': {'required': True,}
         }
+    
 
 

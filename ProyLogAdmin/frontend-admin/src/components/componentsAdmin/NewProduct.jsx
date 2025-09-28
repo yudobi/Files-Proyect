@@ -4,6 +4,7 @@ import api from '../../api';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/stylesAdmin/NewProduct.css';
+import axios from 'axios';
 
 const NewProduct = () => {
   const navigate = useNavigate();

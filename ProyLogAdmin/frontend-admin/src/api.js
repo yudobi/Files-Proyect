@@ -10,9 +10,7 @@ const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
 // ================================
 const api = axios.create({
   baseURL: BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+ 
 });
 
 // ================================
@@ -24,9 +22,24 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  /*
+  console.log('🔄 Request interceptor:');
+  console.log('Data type:', config.data instanceof FormData ? 'FormData' : 'JSON');
+  console.log('Content-Type header:', config.headers['Content-Type']);
+  */
+
+  // 🔹 Solo agregar JSON Content-Type si NO es FormData
+  if (!(config.data instanceof FormData)) {
+    config.headers["Content-Type"] = "application/json";
+  } else {
+    // ❌ NO tocar Content-Type si es FormData
+    delete config.headers["Content-Type"];
+  }
+  
+  //console.log('Content-Type after:', config.headers['Content-Type']);
+  
   return config;
 });
-
 // ================================
 // 4️⃣ Interceptor de respuestas
 // ================================
