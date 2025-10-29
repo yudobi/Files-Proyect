@@ -1,12 +1,12 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
-
-
+import os
+from django.utils import timezone
 ##############################################################################################################################
 # Categorias imagenes
 ##############################################################################################################################
-import os
-from django.db import models
+
+
 
 def categoria_image_path(instance, filename):
     return os.path.join('categorias', str(instance.category.id), filename)
@@ -142,7 +142,6 @@ class Servicio(models.Model):
       super().save(*args, **kwargs)
 
 #-------------------------------------------------------------------------------------------------------
-import os
 def servicio_image_path(instance, filename):
     return os.path.join('servicios', str(instance.id), filename)
 
@@ -159,5 +158,37 @@ class ServicioImagen(models.Model):
     def __str__(self):
         return f"Image {self.id} of {self.servicio.nombreServicio}"
 ##############################################################################################################################
-# Categorias
+# Parte de las Ordenes
 ##############################################################################################################################
+class Order(models.Model):
+    PAYMENT_STATUS_CHOICES = [
+        ('PENDING', 'Pendiente'),
+        ('COMPLETED', 'Completado'),
+        ('FAILED', 'Fallido'),
+    ]
+
+    customer_name = models.CharField(max_length=150)
+    customer_email = models.EmailField()
+    address = models.TextField()
+    payment_method = models.CharField(max_length=50, default='PayPal')
+    payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='PENDING')
+    paypal_order_id = models.CharField(max_length=255, blank=True, null=True)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    @property
+    def total_amount(self):
+        # Suma el precio de todos los productos en la orden
+        return sum(item.subtotal for item in self.items.all())
+
+    def __str__(self):
+        return f"Orden #{self.id} - {self.customer_name}"
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)  # proteger para no borrar productos comprados
+    quantity = models.PositiveIntegerField(default=1)
+    price_at_purchase = models.DecimalField(max_digits=8, decimal_places=2)  # precio al momento de la compra
+
+    @property
+    def subtotal(self):
+        return self.price_at_purchase * self.quantity

@@ -3,12 +3,15 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Product, ProductImage, Brand ,Category , CategoriaImagen
-from .serializers import RegisterSerializer, ProductSerializer, BrandSerializer ,CategorySerializer ,ProductImageSerializer ,CategoriaImagenSerializer ,Servicio , ServicioSerializer
+from .models import Product, ProductImage, Brand ,Category , CategoriaImagen ,Order
+from .serializers import RegisterSerializer, ProductSerializer, BrandSerializer ,CategorySerializer ,ProductImageSerializer ,CategoriaImagenSerializer ,Servicio , ServicioSerializer ,OrderSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 
 from rest_framework.decorators import api_view, parser_classes  # 👈 Import agregado
 from rest_framework.parsers import MultiPartParser, FormParser  # 👈 Import agregado
+
+from django.core.mail import send_mail
+from django.conf import settings
 
 from django.db import transaction
 
@@ -334,3 +337,49 @@ class ServicioImagenViewSet(viewsets.ModelViewSet):
     serializer_class = ServicioImagenSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+
+
+########################################################################
+# Vistas para el modelo de Order
+# Estas vistas manejan las operaciones CRUD para el modelo Servicio 
+########################################################################
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register_order(request):
+    serializer = OrderSerializer(data=request.data)
+    
+    if serializer.is_valid():
+        order = serializer.save()  # aquí se crean los OrderItems con price_at_purchase
+
+        # Preparar texto de productos para el correo
+        items_text = ""
+        for item in order.items.all():
+            items_text += f"{item.quantity} x {item.product.title} - ${item.price_at_purchase:.2f} - subtotal: ${item.subtotal:.2f}\n"
+
+        # Enviar correo de notificación
+        subject = f"Nueva compra de {order.customer_name}"
+        message = (
+            f"Se ha realizado una nueva compra:\n\n"
+            f"Cliente: {order.customer_name}\n"
+            f"Correo: {order.customer_email}\n"
+            f"Dirección: {order.address}\n"
+            f"Método de pago: {order.payment_method}\n"
+            f"Estado del pago: {order.payment_status}\n"
+            f"Monto total: ${order.total_amount:.2f}\n\n"
+            f"Productos:\n{items_text}"
+        )
+
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.DEFAULT_FROM_EMAIL],  # tu correo de notificación
+            fail_silently=False,
+        )
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

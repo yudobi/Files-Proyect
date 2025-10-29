@@ -1,0 +1,111 @@
+/* src/styles/paypal.css */
+.paypal-payment {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  background: #f9f9f9;
+}
+
+.paypal-payment h4 {
+  margin-bottom: 15px;
+  text-align: center;
+  color: #333;
+}
+
+.paypal-loading {
+  text-align: center;
+  padding: 20px;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #0070ba;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.payment-success {
+  text-align: center;
+  padding: 20px;
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+  color: #155724;
+}
+
+.success-icon {
+  font-size: 48px;
+  color: #28a745;
+  margin-bottom: 10px;
+}
+
+.payment-error {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.payment-option:hover {
+  border-color: #0070ba;
+}
+
+.payment-option input[type="radio"]:checked + .payment-option-content {
+  color: #0070ba;
+}
+
+.payment-option-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.payment-icon {
+  font-size: 24px;
+}
+
+.payment-text {
+  font-weight: bold;
+}
+
+.payment-section {
+  width: 100%;
+}
+
+.back-to-cart-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.back-to-cart-btn:hover {
+  background: #5a6268;
+}

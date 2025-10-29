@@ -145,4 +145,37 @@ class ServicioSerializer(serializers.ModelSerializer):
         }
     
 
+########################################################################
+# Serializer for Order y OrderItem model
+# This serializer is used to serialize and deserialize Product model instances
+########################################################################
+from .models import Order, OrderItem
 
+class OrderItemSerializer(serializers.ModelSerializer):
+    product_name = serializers.CharField(source='product.title', read_only=True)
+    subtotal = serializers.DecimalField(max_digits=8, decimal_places=2, read_only=True)
+
+    class Meta:
+        model = OrderItem
+        fields = ['product', 'product_name', 'quantity', 'price_at_purchase', 'subtotal']
+
+class OrderSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = ['id', 'customer_name', 'customer_email', 'address',
+                  'payment_method', 'payment_status', 'paypal_order_id', 'created_at', 'items', 'total_amount']
+
+    def create(self, validated_data):
+        items_data = validated_data.pop('items')
+        order = Order.objects.create(**validated_data)
+        for item_data in items_data:
+            product = Product.objects.get(id=item_data['product'].id)
+            OrderItem.objects.create(
+                order=order,
+                product=product,
+                quantity=item_data['quantity'],
+                price_at_purchase=product.price  # guardamos el precio con descuento
+            )
+        return order

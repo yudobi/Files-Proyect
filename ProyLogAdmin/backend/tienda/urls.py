@@ -11,7 +11,8 @@ from .views import (
     ServicioViewSet,
     ServicioImagenViewSet,
     CategoryViewSet,
-    CategoriaImagenViewSet
+    CategoriaImagenViewSet,
+    register_order
 )
 from . import views
 
@@ -43,6 +44,7 @@ urlpatterns = [
     #path('create-brand/', CreateGetBrandView.as_view(), name='create_or_get_brand'),
     path('mirror-request/', views.mirror_request, name='mirror-request'),
     path('debug/', debug_request),
+    path('register-order/', register_order, name='register_order'),
 ]
 
 # If in DEBUG mode, add media URL patterns

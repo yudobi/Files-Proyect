@@ -3,6 +3,19 @@ from dotenv import load_dotenv
 import os
 import dj_database_url
 
+
+#################CONFIG GMAIL###############################
+from decouple import config
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -259,8 +272,10 @@ SECURE_PASSWORD_VALIDATORS = [
     # Otros validadores...
 ]
 
-
-
+# Configuración de PayPal
+PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID")
+PAYPAL_SECRET = os.getenv("PAYPAL_SECRET")
+PAYPAL_ENVIRONMENT = "sandbox"
 
 
 ############################################################################# Agrega esto al final de settings.py
